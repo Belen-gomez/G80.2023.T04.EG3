@@ -2,6 +2,8 @@
 import hashlib
 import json
 from datetime import datetime
+#from uc3m_logistics import OrderManager
+#from uc3m_logistics import OrderManagementException
 
 class OrderRequest:
     """Class representing one order for a product"""
@@ -47,6 +49,7 @@ class OrderRequest:
     def product_id( self ):
         """Property representing the products  EAN13 code"""
         return self.__product_id
+
     @product_id.setter
     def product_id( self, value ):
         self.__product_id = value
@@ -59,6 +62,9 @@ class OrderRequest:
     @property
     def order_id( self ):
         """Returns the md5 signature"""
+        #validar = OrderManager.validate_ean13(self.__product_id)
+        #if validar == False:
+        #raise OrderManagementException
         return hashlib.md5(self.__str__().encode()).hexdigest()
 
     @property

@@ -62,9 +62,6 @@ class OrderRequest:
     @property
     def order_id( self ):
         """Returns the md5 signature"""
-        #validar = OrderManager.validate_ean13(self.__product_id)
-        #if validar == False:
-        #raise OrderManagementException
         return hashlib.md5(self.__str__().encode()).hexdigest()
 
     @property

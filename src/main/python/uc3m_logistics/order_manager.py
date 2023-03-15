@@ -44,12 +44,21 @@ class OrderManager:
 
     def register_order (self, product_id, address, order_type, phone, zip_code):
         self.validate_ean13(eAn13=product_id)
+
         if order_type!= "PREMIUM" and order_type!= "REGULAR":
             raise OrderManagementException("Order type wrong")
+
         if len(address<20):
             raise OrderManagementException("Address too short")
         if len(address>20):
             raise OrderManagementException("Address too long")
+        espacio = False
+        for i in address:
+            if i == ' ':
+                espacio = True
+        if espacio == False:
+            raise OrderManagementException("Direccion sin espacios")
+
         my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type, phone_number=phone, zip_code=zip_code)
 
         return my_order.order_id

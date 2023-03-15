@@ -72,9 +72,16 @@ class TestOrderManager(TestCase):
     def test_with_address_long(self):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
-            value = my_order.register_order("8421691423220", "REGULAR", "C/LISBOA,4, MADRID,", "123456789",
+            value = my_order.register_order("8421691423220", "REGULAR", "C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAIN", "123456789",
                                             "28005")
             self.assertEqual("Address too long", cm.exception.message)
+
+    def test_with_address_wrong(self):
+        my_order = OrderManager()
+        with self.assertRaises(OrderManagementException) as cm:
+            value = my_order.register_order("8421691423220", "REGULAR", "C/LISBOA,4,MADRID,SPAIN", "123456789",
+                                            "28005")
+            self.assertEqual("Direccion sin espacios", cm.exception.message)
 
 
 if __name__ == '__main__':

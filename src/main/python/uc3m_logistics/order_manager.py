@@ -1,4 +1,6 @@
 """Module """
+import json
+
 from .order_request import OrderRequest
 from .order_management_exception import OrderManagementException
 
@@ -23,7 +25,7 @@ class OrderManager:
         #  El siguiente for comprueba el código de barras y si hay algun valor que no esté entre 0 y 9, este da error.
         for i in eAn13:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-                raise OrderManagementException("Invalid EAN13 code sum")
+                raise OrderManagementException("Invalid EAN13 code string")
         suma = 0
         #  Este for hace la validación del código de barras, multiplicando las posiciones impares del código por 1 y
         #  las pares por 3. En nuestro caso, como el for empieza en 0, la primera posicion será par en lugar de impar
@@ -41,16 +43,15 @@ class OrderManager:
             raise OrderManagementException("Invalid EAN13 code sum")
         return True
 
-
-    def register_order (self, product_id, address, order_type, phone, zip_code):
+    def register_order(self, product_id, address, order_type, phone, zip_code):
         self.validate_ean13(eAn13=product_id)
 
-        if order_type!= "PREMIUM" and order_type!= "REGULAR":
+        if order_type != "PREMIUM" and order_type != "REGULAR":
             raise OrderManagementException("Order type wrong")
 
-        if len(address<20):
+        if len(address) < 20:
             raise OrderManagementException("Address too short")
-        if len(address>20):
+        if len(address) > 100:
             raise OrderManagementException("Address too long")
         espacio = False
         for i in address:
@@ -59,6 +60,31 @@ class OrderManager:
         if espacio == False:
             raise OrderManagementException("Direccion sin espacios")
 
-        my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type, phone_number=phone, zip_code=zip_code)
+        for i in phone:
+            if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+                raise OrderManagementException("Phone number is a string")
+
+        if len(phone) < 9:
+            raise OrderManagementException("Phone number too short")
+        if len(phone) > 9:
+            raise OrderManagementException("Phone number too long")
+
+        for i in zip_code:
+            if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+                raise OrderManagementException("Zip code is a string")
+
+        j = 0
+        if int(zip_code[j]) > 5:
+            raise OrderManagementException("Zip code is not valid")
+        elif int(zip_code[j]) == 5 and int(zip_code[j+1] > 2):
+            raise OrderManagementException("Zip code is not valid")
+
+        if len(zip_code) < 5:
+            raise OrderManagementException("Zip code too short")
+        if len(zip_code) > 5:
+            raise OrderManagementException("Zip code too long")
+
+        my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type,
+                                phone_number=phone, zip_code=zip_code)
 
         return my_order.order_id

@@ -1,5 +1,6 @@
 """Module """
 import json
+from pathlib import Path
 
 from .order_request import OrderRequest
 from .order_management_exception import OrderManagementException
@@ -54,9 +55,11 @@ class OrderManager:
         if len(address) > 100:
             raise OrderManagementException("Address too long")
         espacio = False
-        for i in address:
-            if i == ' ':
+        i = 0
+        while i < len(address) and not espacio:
+            if address[i] == ' ' and i+1!= len(address):
                 espacio = True
+            i+=1
         if espacio == False:
             raise OrderManagementException("Direccion sin espacios")
 
@@ -86,5 +89,27 @@ class OrderManager:
 
         my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type,
                                 phone_number=phone, zip_code=zip_code)
+
+        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        file_store = JSON_FILE_PATH + "store_request.json"
+        try:
+            with open(file_store, "r", encoding = "utf8", newline="") as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            data_list = []
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
+
+        found = False
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == my_order.order_id:
+                found = True
+        if not found:
+            data_list.append(my_order.__dict__)
+            try:
+                with open(file_store, "w", encoding="utf8", newline="") as file:
+                    json.dump(data_list, file, indent=2)
+            except FileNotFoundError as ex:
+                raise OrderManagementException("Wrong file or file path") from ex
 
         return my_order.order_id

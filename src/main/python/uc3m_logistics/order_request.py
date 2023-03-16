@@ -15,7 +15,7 @@ class OrderRequest:
         self.__zip_code = zip_code
         justnow = datetime.utcnow()
         self.__time_stamp = datetime.timestamp(justnow)
-
+        self.__order_id = hashlib.md5(self.__str__().encode()).hexdigest()
     def __str__(self):
         return "OrderRequest:" + json.dumps(self.__dict__)
 
@@ -62,7 +62,7 @@ class OrderRequest:
     @property
     def order_id( self ):
         """Returns the md5 signature"""
-        return hashlib.md5(self.__str__().encode()).hexdigest()
+        return self.__order_id
 
     @property
     def zip_code( self ):

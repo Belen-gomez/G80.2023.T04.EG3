@@ -1,5 +1,6 @@
 """Module """
 import json
+import re
 from pathlib import Path
 
 from .order_request import OrderRequest
@@ -90,7 +91,7 @@ class OrderManager:
         my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type,
                                 phone_number=phone, zip_code=zip_code)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
             with open(file_store, "r", encoding = "utf8", newline="") as file:
@@ -113,3 +114,51 @@ class OrderManager:
                 raise OrderManagementException("Wrong file or file path") from ex
 
         return my_order.order_id
+
+    def send_product(self, input_file):
+        try:
+            with open(input_file, "r", encoding = "utf8", newline="") as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Archivo no encontrado")
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
+
+
+        for item in data_list:
+            orderid = item["OrderID"]
+            for i in orderid:
+                if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
+                    raise OrderManagementException("OrderID no está en hexadecimal")
+            if len(orderid) != 32:
+                raise OrderManagementException("OrderID longitud erronea")
+
+            email_pattern = re.compile("[A-Za-z0-9]+@+[A-Za-z0-9.]+.+[a-z]{2,3}")
+            my_email = item["ContactEmail"]
+            valido = email_pattern.match(my_email)
+            if valido is None:
+                raise OrderManagementException("Email no valido")
+
+            """valido_1 = False
+            valido_2 = False
+            for i in email:
+                if i == "@":
+                    valido_1 = True
+                elif i == ".":
+                    if valido_1:
+                        valido_2 = True
+            if not valido_1:
+                raise OrderManagementException("Email no valido")
+            if valido_1 and not valido_2:
+                raise OrderManagementException("Email no valido")
+            """
+
+
+
+
+
+
+
+
+
+

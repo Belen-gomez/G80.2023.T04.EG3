@@ -16,7 +16,7 @@ class TestOrderManager(TestCase):
                                            zip_code="28005", phone="123456789", order_type="REGULAR")
         self.assertEqual(my_value, "39c990e813534575b3a114b44a38f08a")
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding= "UTF-8", newline="")) as file:
@@ -34,7 +34,7 @@ class TestOrderManager(TestCase):
                                            zip_code="28005", phone="123456789", order_type="PREMIUM")
         self.assertEqual(my_value, "834d88b261c0af0f337546cf73448809")
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -52,7 +52,7 @@ class TestOrderManager(TestCase):
             value = my_order.register_order("842169142322A", "C/LISBOA,4, MADRID, SPAIN", "PREMIUM", "123456789",
                                             "28005")
         self.assertEqual("Invalid EAN13 code string", cm.exception.message)
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -70,7 +70,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Invalid EAN13 code sum", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -88,7 +88,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Invalid EAN13 code len < 13", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -106,7 +106,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Invalid EAN13 code len > 13", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -124,7 +124,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Order type wrong", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -142,7 +142,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Address too short", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -160,7 +160,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Address too long", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -178,7 +178,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Direccion sin espacios", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -196,7 +196,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Phone number is a string", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -214,7 +214,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Phone number too short", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -232,7 +232,7 @@ class TestOrderManager(TestCase):
                                             "28005")
         self.assertEqual("Phone number too long", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -250,7 +250,7 @@ class TestOrderManager(TestCase):
                                             "67008")
         self.assertEqual("Zip code is not valid", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -268,7 +268,7 @@ class TestOrderManager(TestCase):
                                             "280A8")
         self.assertEqual("Zip code is a string", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -286,7 +286,7 @@ class TestOrderManager(TestCase):
                                             "2800")
         self.assertEqual("Zip code too short", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
@@ -304,7 +304,7 @@ class TestOrderManager(TestCase):
                                             "280055")
         self.assertEqual("Zip code too long", cm.exception.message)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
 
         with (open(file_store, "r", encoding="UTF-8", newline="")) as file:

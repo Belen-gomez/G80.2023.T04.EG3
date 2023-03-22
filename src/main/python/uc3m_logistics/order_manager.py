@@ -7,6 +7,7 @@ from .order_request import OrderRequest
 from .order_shipping import OrderShipping
 from .order_management_exception import OrderManagementException
 
+JSON_FILE_PATH = "C:/Users/nacho/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 class OrderManager:
     """Class for providing the methods for managing the orders"""
     def __init__(self):
@@ -91,7 +92,6 @@ class OrderManager:
         my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type,
                                 phone_number=phone, zip_code=zip_code)
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file:
@@ -126,6 +126,9 @@ class OrderManager:
 
 
         #for item in data_list:
+        if data_list[0] == {}:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format")
+
         orderid = data_list[0]["OrderID"]
         for i in orderid:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
@@ -139,7 +142,7 @@ class OrderManager:
         if valido is None:
             raise OrderManagementException("Email no valido")
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        #JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file_2:
@@ -161,7 +164,7 @@ class OrderManager:
 
         pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid, delivery_email= my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
 
-        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        #JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
         shipping_store = JSON_FILE_PATH + "store_shipping.json"
         try:
             with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
@@ -175,6 +178,7 @@ class OrderManager:
         for item in almacen_pedidos:
             if item["_OrderShipping__order_id"] == pedido.order_id:
                 encontra2 = True
+
         if not encontra2:
             almacen_pedidos.append(pedido.__dict__)
             try:

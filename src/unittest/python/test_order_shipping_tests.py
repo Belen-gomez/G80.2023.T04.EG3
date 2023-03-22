@@ -7,7 +7,7 @@ from freezegun import freeze_time
 from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
-JSON_TEST_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/tests/"
+JSON_TEST_PATH = "C:/Users/nacho/PycharmProjects/G80.2023.T04.EG3/src/Json/tests/"
 class TestOrderShipping(TestCase):
 
     @freeze_time("2023-03-13")
@@ -68,5 +68,284 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_2_double.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_2_duplication.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_3_deletion(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_3_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_3_duplication(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_3_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_4_deletion(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_4_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_4_duplication(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_4_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_5_modification(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_5_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_6_duplication(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_6_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_6_deletion(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_6_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_7_duplication(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_7_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_7_deletion(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_7_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_8_duplication(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_8_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_8_deletion(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_8_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)
+
+    def test_9_modification(self):
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_9_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        file_store = JSON_TEST_PATH + "store_shipping.json"
+        found = False
+        creado = True
+        try:
+            with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+                data_list = json.load(file)
+        except FileNotFoundError as ex:
+            creado = False
+        if not found and creado:
+            for item in data_list:
+                if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                    found = True
+
+        self.assertFalse(found)

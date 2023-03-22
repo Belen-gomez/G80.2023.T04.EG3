@@ -4,6 +4,7 @@ import re
 from pathlib import Path
 
 from .order_request import OrderRequest
+from .order_shipping import OrderShipping
 from .order_management_exception import OrderManagementException
 
 class OrderManager:
@@ -47,7 +48,6 @@ class OrderManager:
 
     def register_order(self, product_id, address, order_type, phone, zip_code):
         self.validate_ean13(eAn13=product_id)
-
         if order_type != "PREMIUM" and order_type != "REGULAR":
             raise OrderManagementException("Order type wrong")
 
@@ -91,10 +91,10 @@ class OrderManager:
         my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type,
                                 phone_number=phone, zip_code=zip_code)
 
-        JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
+        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
-            with open(file_store, "r", encoding = "utf8", newline="") as file:
+            with open(file_store, "r", encoding="utf8", newline="") as file:
                 data_list = json.load(file)
         except FileNotFoundError as ex:
             data_list = []
@@ -125,33 +125,66 @@ class OrderManager:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
 
-        for item in data_list:
-            orderid = item["OrderID"]
-            for i in orderid:
-                if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
+        #for item in data_list:
+        orderid = data_list[0]["OrderID"]
+        for i in orderid:
+            if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
                     raise OrderManagementException("OrderID no está en hexadecimal")
             if len(orderid) != 32:
                 raise OrderManagementException("OrderID longitud erronea")
 
-            email_pattern = re.compile("[A-Za-z0-9]+@+[A-Za-z0-9.]+.+[a-z]{2,3}")
-            my_email = item["ContactEmail"]
-            valido = email_pattern.match(my_email)
-            if valido is None:
-                raise OrderManagementException("Email no valido")
+        email_pattern = re.compile("[A-Za-z0-9]+@+[A-Za-z0-9.]+.+[a-z]{2,3}")
+        my_email = data_list[0]["ContactEmail"]
+        valido = email_pattern.match(my_email)
+        if valido is None:
+            raise OrderManagementException("Email no valido")
 
-            """valido_1 = False
-            valido_2 = False
-            for i in email:
-                if i == "@":
-                    valido_1 = True
-                elif i == ".":
-                    if valido_1:
-                        valido_2 = True
-            if not valido_1:
-                raise OrderManagementException("Email no valido")
-            if valido_1 and not valido_2:
-                raise OrderManagementException("Email no valido")
-            """
+        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        file_store = JSON_FILE_PATH + "store_request.json"
+        try:
+            with open(file_store, "r", encoding="utf8", newline="") as file_2:
+                store = json.load(file_2)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Almacén no encontrado")
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
+
+        encontrado = False
+        for item in store:
+            if item["_OrderRequest__order_id"] == orderid:
+                encontrado = True
+                pedido_almacen = item
+
+
+        if not encontrado:
+            raise OrderManagementException("El pedido no se encontró entre los pedidos registrados")
+
+        pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid, delivery_email= my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
+
+        JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
+        shipping_store = JSON_FILE_PATH + "store_shipping.json"
+        try:
+            with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
+                almacen_pedidos = json.load(file_3)
+        except FileNotFoundError as ex:
+            almacen_pedidos = []
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
+
+        encontra2 = False
+        for item in almacen_pedidos:
+            if item["_OrderShipping__order_id"] == pedido.order_id:
+                encontra2 = True
+        if not encontra2:
+            almacen_pedidos.append(pedido.__dict__)
+            try:
+                with open(shipping_store, "w", encoding="utf8", newline="") as file:
+                    json.dump(almacen_pedidos, file, indent=2)
+            except FileNotFoundError as ex:
+                raise OrderManagementException("Wrong file or file path") from ex
+
+        return pedido.tracking_code
+
 
 
 

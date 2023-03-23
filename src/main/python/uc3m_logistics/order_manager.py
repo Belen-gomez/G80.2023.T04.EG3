@@ -213,8 +213,65 @@ class OrderManager:
 
         return pedido.tracking_code
 
+    def deliver_product(self, tracking_number):
 
+        if len(tracking_number) > 64:
+            raise OrderManagementException("Tracking number too long")
 
+        if len(tracking_number) < 64:
+            raise OrderManagementException("Tracking number too short")
+
+        for i in tracking_number:
+            if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
+                raise OrderManagementException("Tracking numberno está en hexadecimal")
+
+        shipping_store = JSON_FILE_PATH + "store_shipping.json"
+        try:
+            with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
+                almacen_pedidos = json.load(file_3)
+        except FileNotFoundError as ex:
+            raise OrderManagementException("Store shipping not found")
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
+
+        encontra2 = False
+        delivery_date = None
+        for item in almacen_pedidos:
+            if item["_OrderShipping__tracking_code"] == tracking_number:
+                encontra2 = True
+                delivery_date = item["_OrderShipping__delivery_day"]
+        if not encontra2:
+            raise OrderManagementException("Pedido no encontrado")
+
+        diccionario= \
+            {
+            "Tracking_code":tracking_number,
+            "Delivery_date":delivery_date
+
+        }
+
+        delivery_store = JSON_FILE_PATH + "store_delivery.json"
+        try:
+            with open(delivery_store, "r", encoding="utf8", newline="") as file_4:
+                data = json.load(file_4)
+        except FileNotFoundError as ex:
+            data = []
+        except json.JSONDecodeError as ex:
+            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
+
+        found = False
+        for item in data:
+            if item["Tracking_code"] == tracking_number:
+                found = True
+        if not found:
+            data.append(diccionario)
+            try:
+                with open(delivery_store, "w", encoding="utf8", newline="") as file:
+                    json.dump(data, file, indent=2)
+            except FileNotFoundError as ex:
+                raise OrderManagementException("Wrong file or file path") from ex
+
+        return True
 
 
 

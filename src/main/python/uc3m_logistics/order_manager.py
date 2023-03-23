@@ -124,10 +124,11 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
-
-        #for item in data_list:
         if data_list[0] == {}:
-            raise OrderManagementException("JSON Decode error - Wrong JSON format")
+            raise OrderManagementException("Pedido vacío")
+
+        #if key.data_list[0] != "OrderID":
+
 
         orderid = data_list[0]["OrderID"]
         for i in orderid:
@@ -142,7 +143,6 @@ class OrderManager:
         if valido is None:
             raise OrderManagementException("Email no valido")
 
-        #JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file_2:
@@ -158,13 +158,11 @@ class OrderManager:
                 encontrado = True
                 pedido_almacen = item
 
-
         if not encontrado:
             raise OrderManagementException("El pedido no se encontró entre los pedidos registrados")
 
         pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid, delivery_email= my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
 
-        #JSON_FILE_PATH = "C:/Users/ferna/Desktop/Desarrollodesoftware/G80.2023.T04.EG3/src/Json/store/"
         shipping_store = JSON_FILE_PATH + "store_shipping.json"
         try:
             with open(shipping_store, "r", encoding="utf8", newline="") as file_3:

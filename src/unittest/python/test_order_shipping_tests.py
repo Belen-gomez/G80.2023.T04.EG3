@@ -52,8 +52,27 @@ class TestOrderShipping(TestCase):
         pass
 
     def test_wrong_pedido_no_encontrado(self):
-        pass
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_pedido_no_encontrado.json")
+        self.assertEqual("El pedido no se encontró entre los pedidos registrados", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+
     def test_wrong_file_not_JSON(self):
+        """
+        test wrong
+        """
         file_store = JSON_STORE_PATH + "store_shipping.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -350,7 +369,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_11_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_11_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -384,7 +403,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_12_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_12_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -435,7 +454,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_11_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_11_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -469,7 +488,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_15_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_15_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -503,7 +522,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_16_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_16_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -537,7 +556,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_17_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_17_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -571,8 +590,8 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_18_duplication.json")
-        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+            file = myfile.send_product(JSON_TEST_PATH + "test_18_deletion.json")
+        self.assertEqual("Clave errónea", cm.exception.message)
 
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
@@ -589,7 +608,7 @@ class TestOrderShipping(TestCase):
 
         with self.assertRaises(OrderManagementException) as cm:
             file = myfile.send_product(JSON_TEST_PATH + "test_18_duplication.json")
-        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+        self.assertEqual("Clave errónea", cm.exception.message)
 
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
@@ -605,7 +624,7 @@ class TestOrderShipping(TestCase):
         myfile = OrderManager()
 
         with self.assertRaises(OrderManagementException) as cm:
-            file = myfile.send_product(JSON_TEST_PATH + "test_19_duplication.json")
+            file = myfile.send_product(JSON_TEST_PATH + "test_19_deletion.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
 
         if os.path.isfile(file_store):
@@ -624,6 +643,737 @@ class TestOrderShipping(TestCase):
         with self.assertRaises(OrderManagementException) as cm:
             file = myfile.send_product(JSON_TEST_PATH + "test_19_duplication.json")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_20_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_20_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_21_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_21_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_21_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_21_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_22_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_22_deletion.json")
+        self.assertEqual("OrderID too short", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_22_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_22_duplication.json")
+        self.assertEqual("OrderID too long", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_23_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_23_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_23_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_23_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_24_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_24_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_24_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_24_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_25_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_25_deletion.json")
+        self.assertEqual("Clave errónea", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_25_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_25_duplication.json")
+        self.assertEqual("Clave errónea", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_26_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_26_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_26_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_26_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_27_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_27_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_28_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_28_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_28_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_28_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_29_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_29_deletion.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_29_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_29_duplication.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_30_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_30_deletion.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_30_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_30_duplication.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_31_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_31_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_32_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_32_modification.json")
+        self.assertEqual("Clave errónea", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_33_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_33_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_34_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_34_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_35_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_35_modification.json")
+        self.assertEqual("OrderID no está en hexadecimal", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_36_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_36_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_37_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_37_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_38_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_38_modification.json")
+        self.assertEqual("Clave errónea", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_39_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_39_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_40_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_40_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_41_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_41_deletion.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_41_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_41_duplication.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_42_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_42_deletion.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_42_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_42_duplication.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_43_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_43_deletion.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_43_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_43_duplication.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_44_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_44_deletion.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_44_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_44_duplication.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_45_deletion(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_45_deletion.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_45_duplication(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_45_duplication.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_46_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_46_modification.json")
+        self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_orderID_31(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_orderID_31.json")
+        self.assertEqual("OrderID too short", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_orderID_33(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            file = myfile.send_product(JSON_TEST_PATH + "test_orderID_33.json")
+        self.assertEqual("OrderID too long", cm.exception.message)
 
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")

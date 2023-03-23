@@ -21,6 +21,7 @@ class OrderShipping():
         #timestamp is represneted in seconds.microseconds
         #__delivery_day must be expressed in senconds to be added to the timestap
         self.__delivery_day = self.__issued_at + (delivery_days * 24 * 60 * 60)
+        self.__tracking_code = hashlib.sha256(self.__signature_string().encode()).hexdigest()
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
@@ -57,7 +58,7 @@ class OrderShipping():
     @property
     def tracking_code( self ):
         """Returns the sha256 signature of the date"""
-        return hashlib.sha256(self.__signature_string().encode()).hexdigest()
+        return self.__tracking_code
 
     @property
     def issued_at(self):

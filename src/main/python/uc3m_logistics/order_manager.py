@@ -116,53 +116,76 @@ class OrderManager:
         return my_order.order_id
 
     def send_product(self, input_file):
+        """
+        :param input_file:
+        :return: tracking code
+        """
+        #  abrimos el fichero input_file en modo lectura.
+        #  guardamos los datos en data_list
+        #  si el fichero no se encuentra o no tiene formato JSON la función devuelve una excepción
         try:
             with open(input_file, "r", encoding = "utf8", newline="") as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             raise OrderManagementException("Archivo no encontrado")
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
+        #  si el archivo está vacío devuelve una excepción
         if data_list[0] == {}:
             raise OrderManagementException("Pedido vacío")
 
-        #if key.data_list[0] != "OrderID":
+        #  si la clave es errónea devuelve una excepción
+        keys = data_list[0].keys()
+        for item in keys:
+            if item != "OrderID" and item!= "ContactEmail":
+                raise OrderManagementException("Clave errónea")
 
-
+        #  comprobamos que el OrderID es una valor hexadecimal de 32 dígitos
         orderid = data_list[0]["OrderID"]
         for i in orderid:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
                     raise OrderManagementException("OrderID no está en hexadecimal")
-            if len(orderid) != 32:
-                raise OrderManagementException("OrderID longitud erronea")
+        if len(orderid) < 32:
+            raise OrderManagementException("OrderID too short")
+        if len(orderid) > 32:
+            raise OrderManagementException("OrderID too long")
 
-        email_pattern = re.compile("[A-Za-z0-9]+@+[A-Za-z0-9.]+.+[a-z]{2,3}")
+        #  comprobamos que el email sigue el patrón correcto. En caso contrario devuelve una excepción
+        email_pattern = re.compile(r'^[A-Za-z0-9]+@[A-Za-z0-9]+\.[a-z]{2,3}$')
         my_email = data_list[0]["ContactEmail"]
         valido = email_pattern.match(my_email)
-        if valido is None:
+        if not valido:
             raise OrderManagementException("Email no valido")
 
+        #  abrimos el fichero store_request, donde están almacenados los pedidos de la función register_order
+        #  guardamos los datos en store
+        #  si el fichero no se encuentra o no tiene formato JSON la función devuelve una excepción
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file_2:
                 store = json.load(file_2)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             raise OrderManagementException("Almacén no encontrado")
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
+        #  comprobamos que el pedido está en el almacén. En caso contrario devuelve una excepción
         encontrado = False
+        pedido_almacen = None
         for item in store:
             if item["_OrderRequest__order_id"] == orderid:
                 encontrado = True
                 pedido_almacen = item
-
         if not encontrado:
             raise OrderManagementException("El pedido no se encontró entre los pedidos registrados")
+        #  se crea un objeto de la clase OrderShipping con los atributos del pedido.
+        #  Order_id y delivery_email son datos del fichero de entrada input_file
+        #  El resto de datos los obtenemos de store_request
+        pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid, delivery_email=my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
 
-        pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid, delivery_email= my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
-
+        #  abrimos el almacén y guardamos sus datos en almacen_pedidos
+        #  si no existe el fichero, la lista almacen_pedidos se crea vacía
         shipping_store = JSON_FILE_PATH + "store_shipping.json"
         try:
             with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
@@ -172,11 +195,14 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
+        #  comprobamos que el pedido no esté ya en el almacén
+        #  si ya está en el almacén no se vuelve a meter
         encontra2 = False
         for item in almacen_pedidos:
             if item["_OrderShipping__order_id"] == pedido.order_id:
                 encontra2 = True
 
+        #  metemos el nuevo pedido en el almacén
         if not encontra2:
             almacen_pedidos.append(pedido.__dict__)
             try:

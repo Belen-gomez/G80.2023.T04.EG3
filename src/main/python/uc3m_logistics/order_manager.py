@@ -7,7 +7,7 @@ from .order_request import OrderRequest
 from .order_shipping import OrderShipping
 from .order_management_exception import OrderManagementException
 
-JSON_FILE_PATH = "C:/Users/nacho/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
+JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 class OrderManager:
     """Class for providing the methods for managing the orders"""
     def __init__(self):

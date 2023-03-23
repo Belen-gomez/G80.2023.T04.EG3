@@ -8,7 +8,7 @@ from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
 
-JSON_FILE_PATH = "C:/Users/nacho/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
+JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 class TestOrderManager(TestCase):
 
     @freeze_time("2023-02-19")

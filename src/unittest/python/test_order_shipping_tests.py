@@ -1,3 +1,6 @@
+"""
+Tests RF2
+"""
 import json
 import os
 import unittest
@@ -11,7 +14,9 @@ JSON_TEST_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/
 JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 
 class TestOrderShipping(TestCase):
-
+    """
+    Tests RF2
+    """
     @freeze_time("2023-03-13")
     def test_ok(self):
         """
@@ -19,8 +24,8 @@ class TestOrderShipping(TestCase):
         """
         myfile = OrderManager()
 
-        file_test = JSON_TEST_PATH +"test_ok.json"
-        my_value= myfile.send_product(file_test)
+        file_test = JSON_TEST_PATH + "test_ok.json"
+        my_value = myfile.send_product(file_test)
         self.assertEqual(my_value, "9626d1c11d0f544588ab0b5be51279b32e96c7d35b956b782d9d8f4b813ec867")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
@@ -68,8 +73,7 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
 
-
-    def test_wrong_file_not_JSON(self):
+    def test_wrong_file_not_json(self):
         """
         test wrong
         """
@@ -1429,8 +1433,7 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
 
-
-    def test_orderID_31(self):
+    def test_orderid_31(self):
         """
         test wrong
         """
@@ -1447,7 +1450,7 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
 
-    def test_orderID_33(self):
+    def test_orderid_33(self):
         """
         test wrong
         """
@@ -1463,3 +1466,6 @@ class TestOrderShipping(TestCase):
 
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
+
+if __name__ == '__main__':
+    unittest.main()

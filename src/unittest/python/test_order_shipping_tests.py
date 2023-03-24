@@ -1344,6 +1344,92 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
 
+    def test_47_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "test_47_modification.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_48_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "test_48_modification.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_49_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "test_49_modification.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_50_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "test_50_modification.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_51_modification(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "test_51_modification.json")
+        self.assertEqual("Email no valido", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+
     def test_orderID_31(self):
         """
         test wrong

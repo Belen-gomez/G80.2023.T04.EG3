@@ -1,3 +1,6 @@
+"""
+Tests OrderDelivery
+"""
 import json
 import os
 import unittest
@@ -12,7 +15,9 @@ JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json
 
 
 class TestOrderDelivery(TestCase):
-
+    """
+    Tests OrderDelivery
+    """
     #@freeze_time("2023-03-13")
     def test_ok(self):
         """

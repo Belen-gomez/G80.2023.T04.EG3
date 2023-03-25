@@ -1,5 +1,7 @@
+"""
+Tests order_shipping
+"""
 import json
-import os
 import unittest
 from pathlib import Path
 from unittest import TestCase
@@ -10,6 +12,9 @@ from uc3m_logistics import OrderManagementException
 
 JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 class TestOrderManager(TestCase):
+    """
+    Tests order_shipping
+    """
 
     @freeze_time("2023-02-19")
     def test_correct_complete_regular(self):
@@ -68,8 +73,8 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
-              creado = False
+        except FileNotFoundError:
+            creado = False
         if not found and creado:
             for item in data_list:
                 if item["_OrderRequest__product_id"] == "842169142322A":
@@ -92,7 +97,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -116,7 +121,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -140,7 +145,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -164,7 +169,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -188,7 +193,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -202,8 +207,8 @@ class TestOrderManager(TestCase):
         """
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
-            my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAIN",  "REGULAR", "123456789",
-                                            "28005")
+            my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAIN",
+                                    "REGULAR", "123456789", "28005")
         self.assertEqual("Address too long", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -212,7 +217,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -236,7 +241,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -260,7 +265,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -284,7 +289,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -308,7 +313,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -332,7 +337,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -356,7 +361,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -380,7 +385,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:
@@ -389,6 +394,9 @@ class TestOrderManager(TestCase):
         self.assertFalse(found)
 
     def test_with_zip_code_long(self):
+        """
+        test wrong
+        """
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
@@ -401,7 +409,7 @@ class TestOrderManager(TestCase):
         try:
             with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             creado = False
         if not found and creado:
             for item in data_list:

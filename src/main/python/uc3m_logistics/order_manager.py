@@ -2,7 +2,6 @@
 import json
 import re
 from pathlib import Path
-
 from .order_request import OrderRequest
 from .order_shipping import OrderShipping
 from .order_management_exception import OrderManagementException
@@ -48,8 +47,16 @@ class OrderManager:
         return True
 
     def register_order(self, product_id, address, order_type, phone, zip_code):
+        """
+        :param product_id:
+        :param address:
+        :param order_type:
+        :param phone:
+        :param zip_code:
+        :return: order_id
+        """
         self.validate_ean13(eAn13=product_id)
-        if order_type != "PREMIUM" and order_type != "REGULAR":
+        if order_type not in ("REGULAR", "PREMIUM"):
             raise OrderManagementException("Order type wrong")
 
         if len(address) < 20:
@@ -62,7 +69,7 @@ class OrderManager:
             if address[i] == ' ' and i+1!= len(address):
                 espacio = True
             i+=1
-        if espacio == False:
+        if not espacio:
             raise OrderManagementException("Direccion sin espacios")
 
         for i in phone:
@@ -81,7 +88,7 @@ class OrderManager:
         j = 0
         if int(zip_code[j]) > 5:
             raise OrderManagementException("Zip code is not valid")
-        elif int(zip_code[j]) == 5 and int(zip_code[j+1] > 2):
+        if int(zip_code[j]) == 5 and int(zip_code[j+1] > 2):
             raise OrderManagementException("Zip code is not valid")
 
         if len(zip_code) < 5:
@@ -96,7 +103,7 @@ class OrderManager:
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file:
                 data_list = json.load(file)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             data_list = []
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
@@ -126,8 +133,8 @@ class OrderManager:
         try:
             with open(input_file, "r", encoding = "utf8", newline="") as file:
                 data_list = json.load(file)
-        except FileNotFoundError:
-            raise OrderManagementException("Archivo no encontrado")
+        except FileNotFoundError as exc:
+            raise OrderManagementException("Archivo no encontrado") from exc
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
@@ -138,14 +145,14 @@ class OrderManager:
         #  si la clave es errónea devuelve una excepción
         keys = data_list[0].keys()
         for item in keys:
-            if item != "OrderID" and item!= "ContactEmail":
+            if item not in ("OrderID", "ContactEmail"):
                 raise OrderManagementException("Clave errónea")
 
         #  comprobamos que el OrderID es una valor hexadecimal de 32 dígitos
         orderid = data_list[0]["OrderID"]
         for i in orderid:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
-                    raise OrderManagementException("OrderID no está en hexadecimal")
+                raise OrderManagementException("OrderID no está en hexadecimal")
         if len(orderid) < 32:
             raise OrderManagementException("OrderID too short")
         if len(orderid) > 32:
@@ -165,8 +172,8 @@ class OrderManager:
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file_2:
                 store = json.load(file_2)
-        except FileNotFoundError:
-            raise OrderManagementException("Almacén no encontrado")
+        except FileNotFoundError as exc:
+            raise OrderManagementException("Almacén no encontrado") from exc
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
@@ -214,6 +221,11 @@ class OrderManager:
         return pedido.tracking_code
 
     def deliver_product(self, tracking_number):
+        """
+
+        :param tracking_number:
+        :return: True
+        """
 
         if len(tracking_number) > 64:
             raise OrderManagementException("Tracking number too long")
@@ -230,7 +242,7 @@ class OrderManager:
             with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
                 almacen_pedidos = json.load(file_3)
         except FileNotFoundError as ex:
-            raise OrderManagementException("Store shipping not found")
+            raise OrderManagementException("Store shipping not found") from ex
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
@@ -272,11 +284,3 @@ class OrderManager:
                 raise OrderManagementException("Wrong file or file path") from ex
 
         return True
-
-
-
-
-
-
-
-

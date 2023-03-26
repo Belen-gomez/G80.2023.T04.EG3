@@ -3,48 +3,48 @@ from datetime import datetime
 import json
 import re
 from pathlib import Path
+from .order_management_exception import OrderManagementException
 from .order_request import OrderRequest
 from .order_shipping import OrderShipping
-from .order_management_exception import OrderManagementException
 
 JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 
 
 class OrderManager:
     """Class for providing the methods for managing the orders"""
+
     def __init__(self):
         pass
 
     @staticmethod
-    def validate_ean13(eAn13):
+    def validate_ean13(ean13):
         """
-
-        :param eAn13:
+        :param ean13:
         :return:
         """
         #  La función validateEan13 en primer lugar comprueba si la longitud del código es distinta de 13, si es así.
         #  la función devuelve un False.
-        if len(eAn13) < 13:
+        if len(ean13) < 13:
             raise OrderManagementException("Invalid EAN13 code len < 13")
-        if len(eAn13) > 13:
+        if len(ean13) > 13:
             raise OrderManagementException("Invalid EAN13 code len > 13")
         #  El siguiente for comprueba el código de barras y si hay algun valor que no esté entre 0 y 9, este da error.
-        for i in eAn13:
+        for i in ean13:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 raise OrderManagementException("Invalid EAN13 code string")
         suma = 0
         #  Este for hace la validación del código de barras, multiplicando las posiciones impares del código por 1 y
         #  las pares por 3. En nuestro caso, como el for empieza en 0, la primera posicion será par en lugar de impar
         #  por lo que se multiplicarán las impares por 3 y las pares por 1.
-        for i in range(len(eAn13) - 1):
-            digito = int(eAn13[i])
+        for i in range(len(ean13) - 1):
+            digito = int(ean13[i])
             if i % 2 == 0:
                 suma += digito
             else:
                 suma += digito * 3
         #  Finalmente a la suma se le añade la última posición del código y si esta suma es múltiplo de 10,
         #  la función devolverá True, ya que el código estaría validado. Si no es múltiplo de 10 devolverá False
-        suma += int(eAn13[-1])
+        suma += int(ean13[-1])
         if suma % 10 != 0:
             raise OrderManagementException("Invalid EAN13 code sum")
         return True
@@ -59,7 +59,7 @@ class OrderManager:
         :return: order_id
         """
         #  comprobamos que el eAn13 es del formato correcto
-        self.validate_ean13(eAn13=product_id)
+        self.validate_ean13(ean13=product_id)
         #  comprobamos que el order_type es correcto. En caso contrario se devuelve una excepción
         if order_type not in ("REGULAR", "PREMIUM"):
             raise OrderManagementException("Order type wrong")
@@ -72,9 +72,9 @@ class OrderManager:
         espacio = False
         i = 0
         while i < len(address) and not espacio:
-            if address[i] == ' ' and i+1!= len(address):
+            if address[i] == ' ' and i + 1 != len(address):
                 espacio = True
-            i+=1
+            i += 1
         if not espacio:
             raise OrderManagementException("Direccion sin espacios")
 
@@ -96,7 +96,7 @@ class OrderManager:
         j = 0
         if int(zip_code[j]) > 5:
             raise OrderManagementException("Zip code is not valid")
-        if int(zip_code[j]) == 5 and int(zip_code[j+1] > 2):
+        if int(zip_code[j]) == 5 and int(zip_code[j + 1] > 2):
             raise OrderManagementException("Zip code is not valid")
         if len(zip_code) < 5:
             raise OrderManagementException("Zip code too short")
@@ -123,7 +123,8 @@ class OrderManager:
         for item in data_list:
             if item["_OrderRequest__order_id"] == my_order.order_id:
                 found = True
-        #  si el pedido no se había almacenado antes, se añade a la lista de pedidos en forma de diccionario y se añade al almacén
+        #  si el pedido no se había almacenado antes,
+        #  se añade a la lista de pedidos en forma de diccionario y se añade al almacén
         if not found:
             data_list.append(my_order.__dict__)
             try:
@@ -144,7 +145,7 @@ class OrderManager:
         #  guardamos los datos en data_list
         #  si el fichero no se encuentra o no tiene formato JSON la función devuelve una excepción
         try:
-            with open(input_file, "r", encoding = "utf8", newline="") as file:
+            with open(input_file, "r", encoding="utf8", newline="") as file:
                 data_list = json.load(file)
         except FileNotFoundError as exc:
             raise OrderManagementException("Archivo no encontrado") from exc
@@ -202,7 +203,8 @@ class OrderManager:
         #  se crea un objeto de la clase OrderShipping con los atributos del pedido.
         #  Order_id y delivery_email son datos del fichero de entrada input_file
         #  El resto de datos los obtenemos de store_request
-        pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid, delivery_email=my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
+        pedido = OrderShipping(product_id=pedido_almacen["_OrderRequest__product_id"], order_id=orderid,
+                               delivery_email=my_email, order_type=pedido_almacen["_OrderRequest__order_type"])
 
         #  abrimos el almacén y guardamos sus datos en almacen_pedidos
         #  si no existe el fichero, la lista almacen_pedidos se crea vacía
@@ -210,7 +212,7 @@ class OrderManager:
         try:
             with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
                 almacen_pedidos = json.load(file_3)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             almacen_pedidos = []
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
@@ -239,25 +241,30 @@ class OrderManager:
         :param tracking_number:
         :return: True
         """
+        #  se comprueba si la longitud del tracking_number es mayor de 64
         if len(tracking_number) > 64:
             raise OrderManagementException("Tracking number too long")
 
+        #  se comprueba si la longitud del tracking_number es mayor de 64
         if len(tracking_number) < 64:
             raise OrderManagementException("Tracking number too short")
 
+        #  se comprueba si el tracking_number está en haxadecimal
         for i in tracking_number:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
                 raise OrderManagementException("Tracking number no está en hexadecimal")
 
+        #  se guarda la ruta del archivo store_shipping
+        #  si el archivo no existe la función devuelve una excepción
         shipping_store = JSON_FILE_PATH + "store_shipping.json"
+        delivery_store = JSON_FILE_PATH + "store_delivery.json"
         try:
             with open(shipping_store, "r", encoding="utf8", newline="") as file_3:
                 almacen_pedidos = json.load(file_3)
         except FileNotFoundError as ex:
             raise OrderManagementException("Store shipping not found") from ex
-        except json.JSONDecodeError as ex:
-            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
+        #  se comprueba que el pedido está en el almacén
         encontra2 = False
         delivery_date = None
         for item in almacen_pedidos:
@@ -265,42 +272,41 @@ class OrderManager:
                 encontra2 = True
                 delivery_date = item["_OrderShipping__delivery_day"]
 
+        #  en caso contrario, la función devuelve una excepción
         if not encontra2:
             raise OrderManagementException("Pedido no encontrado")
 
+        #  se comprueba que la fecha de entrga es hoy
+        #  en caso contrario la función devuelve una excepción
         hoyfecha = datetime.utcnow()
         hoysegundos = datetime.timestamp(hoyfecha)
         if delivery_date != hoysegundos:
             raise OrderManagementException("Fecha incorrecta")
 
-
-
-        diccionario= \
+        #  creamos el diccionario con los datos de la entraga que hay que almacenar
+        diccionario = \
             {
-                "Tracking_code":tracking_number,
-                "Delivery_date":delivery_date
-
+                "Tracking_code": tracking_number,
+                "Delivery_date": delivery_date
             }
 
-        delivery_store = JSON_FILE_PATH + "store_delivery.json"
+        #  abrimos el fichero store_delivery y guardamos su contenido en data
+        #  en caso de que el archivo no exista se crea la lista vacía
         try:
             with open(delivery_store, "r", encoding="utf8", newline="") as file_4:
                 data = json.load(file_4)
-        except FileNotFoundError as ex:
+        except FileNotFoundError:
             data = []
-        except json.JSONDecodeError as ex:
-            raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
+        #  si el pedido no está almacenado en delivery store se almacena
         found = False
         for item in data:
             if item["Tracking_code"] == tracking_number:
                 found = True
         if not found:
             data.append(diccionario)
-            try:
-                with open(delivery_store, "w", encoding="utf8", newline="") as file:
-                    json.dump(data, file, indent=2)
-            except FileNotFoundError as ex:
-                raise OrderManagementException("Wrong file or file path") from ex
+            with open(delivery_store, "w", encoding="utf8", newline="") as file:
+                json.dump(data, file, indent=2)
 
+        #  la función devuelve siempre True si se ha ejecutado correctamente
         return True

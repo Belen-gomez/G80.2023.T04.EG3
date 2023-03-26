@@ -65,6 +65,47 @@ class TestOrderDelivery(TestCase):
         self.assertTrue(found)
 
     @freeze_time("2023-02-19")
+    def test_ok_ya_almacenado(self):
+        """
+        test ok
+        """
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
+        file_store = JSON_STORE_PATH + "store_request.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        my_order = OrderManager()
+        my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
+                                zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_test = JSON_TEST_PATH + "test_ok.json"
+        my_order.send_product(file_test)
+
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+
+        with (open(file_shipping, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+
+        data_list[0]["_OrderShipping__delivery_day"] = datetime.timestamp(datetime.utcnow())
+
+        with open(file_shipping, "w", encoding="utf8", newline="") as file:
+            json.dump(data_list, file, indent=2)
+
+        my_order.deliver_product("c80509cf07c1efefcaba7ec55512f218a047925162f121fcac3fc008bfad810a")
+        my_order.deliver_product("c80509cf07c1efefcaba7ec55512f218a047925162f121fcac3fc008bfad810a")
+
+        file_store = JSON_STORE_PATH + "store_delivery.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        self.assertEqual(1, len(data_list))
+
+    @freeze_time("2023-02-19")
     def test_tracking_num_65(self):
         """
         test wrong
@@ -180,10 +221,29 @@ class TestOrderDelivery(TestCase):
 
     @freeze_time("2023-02-19")
     def test_store_shipping_not_found(self):
-        pass
+        """
+        test wrong
+        """
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
+        file_store = JSON_STORE_PATH + "store_request.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
 
-    def test_store_shipping_not_json(self):
-        pass
+        my_order = OrderManager()
+        my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
+                                zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        with self.assertRaises(OrderManagementException) as cm:
+            my_order.deliver_product("9626d1c11d0f544588ab0b5be51279b32e96c9d35b956b782d9d8f4b813ec866")
+        self.assertEqual("Store shipping not found", cm.exception.message)
+
+        if os.path.isfile(file_delivery):
+            self.fail("Fallo: no debería haber file_store")
 
     @freeze_time("2023-02-19")
     def test_pedido_not_found(self):
@@ -261,8 +321,5 @@ class TestOrderDelivery(TestCase):
         if os.path.isfile(file_delivery):
             self.fail("Fallo: no debería haber file_store")
 
-    def test_store_delivery_not_json(self):
-        pass
-
-    def test_wrong_file(self):
-        pass
+if __name__ == '__main__':
+    unittest.main()

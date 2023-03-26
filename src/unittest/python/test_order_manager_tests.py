@@ -9,7 +9,6 @@ from freezegun import freeze_time
 from uc3m_logistics import OrderManager
 from uc3m_logistics import OrderManagementException
 
-
 JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 
 
@@ -66,7 +65,7 @@ class TestOrderManager(TestCase):
 
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("842169142322A", "C/LISBOA,4, MADRID, SPAIN", "PREMIUM", "123456789",
-            "28005")
+                                    "28005")
         self.assertEqual("Invalid EAN13 code string", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -90,7 +89,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423225", "C/LISBOA,4, MADRID, SPAIN", "PREMIUM", "123456789",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Invalid EAN13 code sum", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -114,7 +113,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("842169142322", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Invalid EAN13 code len < 13", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -138,7 +137,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("84216914232200", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Invalid EAN13 code len > 13", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -162,7 +161,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "PRE", "123456789",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Order type wrong", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -185,8 +184,8 @@ class TestOrderManager(TestCase):
         """
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
-            my_order.register_order("8421691423220", "C/LISBOA,4, MADRID,", "PREMIUM",  "123456789",
-                                            "28005")
+            my_order.register_order("8421691423220", "C/LISBOA,4, MADRID,", "PREMIUM", "123456789",
+                                    "28005")
         self.assertEqual("Address too short", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -209,7 +208,8 @@ class TestOrderManager(TestCase):
         """
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
-            my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAIN",
+            my_order.register_order("8421691423220",
+                                    "C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAIN",
                                     "REGULAR", "123456789", "28005")
         self.assertEqual("Address too long", cm.exception.message)
 
@@ -234,7 +234,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4,MADRID,SPAIN", "REGULAR", "123456789",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Direccion sin espacios", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -258,7 +258,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "12345A789",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Phone number is a string", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -281,8 +281,8 @@ class TestOrderManager(TestCase):
         """
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
-            my_order.register_order("8421691423220",  "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "12345678",
-                                            "28005")
+            my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "12345678",
+                                    "28005")
         self.assertEqual("Phone number too short", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -306,7 +306,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "1234567890",
-                                            "28005")
+                                    "28005")
         self.assertEqual("Phone number too long", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -330,7 +330,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
-                                            "67008")
+                                    "67008")
         self.assertEqual("Zip code is not valid", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -354,7 +354,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
-                                            "280A8")
+                                    "280A8")
         self.assertEqual("Zip code is a string", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -378,7 +378,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
-                                            "2800")
+                                    "2800")
         self.assertEqual("Zip code too short", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"
@@ -402,7 +402,7 @@ class TestOrderManager(TestCase):
         my_order = OrderManager()
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("8421691423220", "C/LISBOA,4, MADRID, SPAIN", "REGULAR", "123456789",
-                                            "280055")
+                                    "280055")
         self.assertEqual("Zip code too long", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"

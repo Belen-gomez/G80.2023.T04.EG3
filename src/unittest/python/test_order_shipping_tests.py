@@ -18,16 +18,27 @@ class TestOrderShipping(TestCase):
     """
     Tests RF2
     """
-    @freeze_time("2023-03-13")
+
+    @freeze_time("2023-02-19")
     def test_ok(self):
         """
         test ok
         """
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
+        file_store = JSON_STORE_PATH + "store_request.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
         myfile = OrderManager()
+
+        myfile.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
+                              zip_code="28005", phone="123456789", order_type="REGULAR")
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_value = myfile.send_product(file_test)
-        self.assertEqual(my_value, "9626d1c11d0f544588ab0b5be51279b32e96c7d35b956b782d9d8f4b813ec867")
+        self.assertEqual(my_value, "c80509cf07c1efefcaba7ec55512f218a047925162f121fcac3fc008bfad810a")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
 
@@ -55,9 +66,6 @@ class TestOrderShipping(TestCase):
             self.fail("Fallo: no debería haber file_store")
 
     def test_wrong_alamcen_not_found(self):
-        pass
-
-    def test_wrong_pedido_no_encontrado(self):
         """
         test wrong
         """
@@ -65,13 +73,40 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             os.remove(file_store)
 
+        file_store = JSON_STORE_PATH + "store_request.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
         myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "test_pedido_no_encontrado.json")
+        self.assertEqual("Almacén no encontrado", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_wrong_pedido_no_encontrado(self):
+        """
+        test wrong
+        """
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
+        file_store = JSON_STORE_PATH + "store_request.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        myfile.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
+                              zip_code="28005", phone="123456789", order_type="REGULAR")
 
         with self.assertRaises(OrderManagementException) as cm:
             myfile.send_product(JSON_TEST_PATH + "test_pedido_no_encontrado.json")
         self.assertEqual("El pedido no se encontró entre los pedidos registrados", cm.exception.message)
 
-        if os.path.isfile(file_store):
+        if os.path.isfile(file_shipping):
             self.fail("Fallo: no debería haber file_store")
 
     def test_wrong_file_not_json(self):
@@ -1184,15 +1219,21 @@ class TestOrderShipping(TestCase):
         """
         test wrong
         """
-        file_store = JSON_STORE_PATH + "store_shipping.json"
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
+        file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
 
         myfile = OrderManager()
 
+        myfile.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
+                                         zip_code="28005", phone="123456789", order_type="REGULAR")
+
         file_test = JSON_TEST_PATH + "test_41_duplication.json"
         my_value = myfile.send_product(file_test)
-        self.assertEqual(my_value, "9626d1c11d0f544588ab0b5be51279b32e96c7d35b956b782d9d8f4b813ec867")
+        self.assertEqual(my_value, "b6a32b33fc2253f82baed3096dbd45e3e9cb181ed15ddeba9abf1fabc3ff18fb")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
 
@@ -1200,7 +1241,7 @@ class TestOrderShipping(TestCase):
             data_list = json.load(file)
         found = False
         for item in data_list:
-            if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+            if item["_OrderShipping__order_id"] == "50ee155c77848c4dfc6cac14ce061ad8":
                 found = True
         self.assertTrue(found)
 
@@ -1260,15 +1301,21 @@ class TestOrderShipping(TestCase):
         """
         test wrong
         """
-        file_store = JSON_STORE_PATH + "store_shipping.json"
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
+        file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
 
         myfile = OrderManager()
 
-        file_test = JSON_TEST_PATH + "test_43_duplication.json"
+        myfile.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
+                                         zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_test = JSON_TEST_PATH + "test_41_duplication.json"
         my_value = myfile.send_product(file_test)
-        self.assertEqual(my_value, "9626d1c11d0f544588ab0b5be51279b32e96c7d35b956b782d9d8f4b813ec867")
+        self.assertEqual(my_value, "b6a32b33fc2253f82baed3096dbd45e3e9cb181ed15ddeba9abf1fabc3ff18fb")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
 
@@ -1276,7 +1323,7 @@ class TestOrderShipping(TestCase):
             data_list = json.load(file)
         found = False
         for item in data_list:
-            if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+            if item["_OrderShipping__order_id"] == "50ee155c77848c4dfc6cac14ce061ad8":
                 found = True
         self.assertTrue(found)
 
@@ -1483,6 +1530,7 @@ class TestOrderShipping(TestCase):
 
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
+
 
 if __name__ == '__main__':
     unittest.main()

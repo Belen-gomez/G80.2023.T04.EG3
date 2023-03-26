@@ -1,4 +1,5 @@
 """Module """
+from datetime import datetime
 import json
 import re
 from pathlib import Path
@@ -7,6 +8,8 @@ from .order_shipping import OrderShipping
 from .order_management_exception import OrderManagementException
 
 JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
+
+
 class OrderManager:
     """Class for providing the methods for managing the orders"""
     def __init__(self):
@@ -236,7 +239,6 @@ class OrderManager:
         :param tracking_number:
         :return: True
         """
-
         if len(tracking_number) > 64:
             raise OrderManagementException("Tracking number too long")
 
@@ -245,7 +247,7 @@ class OrderManager:
 
         for i in tracking_number:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]:
-                raise OrderManagementException("Tracking numberno está en hexadecimal")
+                raise OrderManagementException("Tracking number no está en hexadecimal")
 
         shipping_store = JSON_FILE_PATH + "store_shipping.json"
         try:
@@ -262,15 +264,23 @@ class OrderManager:
             if item["_OrderShipping__tracking_code"] == tracking_number:
                 encontra2 = True
                 delivery_date = item["_OrderShipping__delivery_day"]
+
         if not encontra2:
             raise OrderManagementException("Pedido no encontrado")
 
+        hoyfecha = datetime.utcnow()
+        hoysegundos = datetime.timestamp(hoyfecha)
+        if delivery_date != hoysegundos:
+            raise OrderManagementException("Fecha incorrecta")
+
+
+
         diccionario= \
             {
-            "Tracking_code":tracking_number,
-            "Delivery_date":delivery_date
+                "Tracking_code":tracking_number,
+                "Delivery_date":delivery_date
 
-        }
+            }
 
         delivery_store = JSON_FILE_PATH + "store_delivery.json"
         try:

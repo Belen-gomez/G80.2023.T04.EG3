@@ -13,6 +13,7 @@ from uc3m_logistics import OrderManagementException
 JSON_TEST_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/tests/"
 JSON_STORE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
 
+
 class TestOrderShipping(TestCase):
     """
     Tests RF2
@@ -1178,6 +1179,7 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
 
+    @freeze_time("2023-03-13")
     def test_41_duplication(self):
         """
         test wrong
@@ -1188,12 +1190,19 @@ class TestOrderShipping(TestCase):
 
         myfile = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            myfile.send_product(JSON_TEST_PATH + "test_41_duplication.json")
-        self.assertEqual("Email no valido", cm.exception.message)
+        file_test = JSON_TEST_PATH + "test_41_duplication.json"
+        my_value = myfile.send_product(file_test)
+        self.assertEqual(my_value, "9626d1c11d0f544588ab0b5be51279b32e96c7d35b956b782d9d8f4b813ec867")
 
-        if os.path.isfile(file_store):
-            self.fail("Fallo: no debería haber file_store")
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+        for item in data_list:
+            if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                found = True
+        self.assertTrue(found)
 
     def test_42_deletion(self):
         """
@@ -1246,6 +1255,7 @@ class TestOrderShipping(TestCase):
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
 
+    @freeze_time("2023-03-13")
     def test_43_duplication(self):
         """
         test wrong
@@ -1256,12 +1266,19 @@ class TestOrderShipping(TestCase):
 
         myfile = OrderManager()
 
-        with self.assertRaises(OrderManagementException) as cm:
-            myfile.send_product(JSON_TEST_PATH + "test_43_duplication.json")
-        self.assertEqual("Email no valido", cm.exception.message)
+        file_test = JSON_TEST_PATH + "test_43_duplication.json"
+        my_value = myfile.send_product(file_test)
+        self.assertEqual(my_value, "9626d1c11d0f544588ab0b5be51279b32e96c7d35b956b782d9d8f4b813ec867")
 
-        if os.path.isfile(file_store):
-            self.fail("Fallo: no debería haber file_store")
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+        for item in data_list:
+            if item["_OrderShipping__order_id"] == "39c990e813534575b3a114b44a38f08a":
+                found = True
+        self.assertTrue(found)
 
     def test_44_deletion(self):
         """

@@ -11,6 +11,8 @@ from uc3m_logistics import OrderManagementException
 
 
 JSON_FILE_PATH = str(Path.home()) + "/PycharmProjects/G80.2023.T04.EG3/src/Json/store/"
+
+
 class TestOrderManager(TestCase):
     """
     Tests order_shipping
@@ -28,7 +30,7 @@ class TestOrderManager(TestCase):
 
         file_store = JSON_FILE_PATH + "store_request.json"
 
-        with (open(file_store, "r", encoding= "UTF-8", newline="")) as file:
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
             data_list = json.load(file)
         found = False
         for item in data_list:
@@ -64,7 +66,7 @@ class TestOrderManager(TestCase):
 
         with self.assertRaises(OrderManagementException) as cm:
             my_order.register_order("842169142322A", "C/LISBOA,4, MADRID, SPAIN", "PREMIUM", "123456789",
-                                            "28005")
+            "28005")
         self.assertEqual("Invalid EAN13 code string", cm.exception.message)
 
         file_store = JSON_FILE_PATH + "store_request.json"

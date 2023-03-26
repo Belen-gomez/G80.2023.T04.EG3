@@ -55,10 +55,13 @@ class OrderManager:
         :param zip_code:
         :return: order_id
         """
+        #  comprobamos que el eAn13 es del formato correcto
         self.validate_ean13(eAn13=product_id)
+        #  comprobamos que el order_type es correcto. En caso contrario se devuelve una excepción
         if order_type not in ("REGULAR", "PREMIUM"):
             raise OrderManagementException("Order type wrong")
-
+        #  comprobamos que la dirección es correcta. En caso contrario se devuelve una excepción
+        #  para ello comprobamos la longitud y el formato
         if len(address) < 20:
             raise OrderManagementException("Address too short")
         if len(address) > 100:
@@ -72,33 +75,37 @@ class OrderManager:
         if not espacio:
             raise OrderManagementException("Direccion sin espacios")
 
+        #  comprobamos que el teléfono es correcto. En caso contrario se devuelve una excepción
+        #  para ello comprobamos la longitud y el formato
         for i in phone:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 raise OrderManagementException("Phone number is a string")
-
         if len(phone) < 9:
             raise OrderManagementException("Phone number too short")
         if len(phone) > 9:
             raise OrderManagementException("Phone number too long")
 
+        #  comprobamos que el teléfono es correcto. En caso contrario se devuelve una excepción
+        #  para ello comprobamos la longitud y el formato
         for i in zip_code:
             if i not in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]:
                 raise OrderManagementException("Zip code is a string")
-
         j = 0
         if int(zip_code[j]) > 5:
             raise OrderManagementException("Zip code is not valid")
         if int(zip_code[j]) == 5 and int(zip_code[j+1] > 2):
             raise OrderManagementException("Zip code is not valid")
-
         if len(zip_code) < 5:
             raise OrderManagementException("Zip code too short")
         if len(zip_code) > 5:
             raise OrderManagementException("Zip code too long")
 
+        #  creamos el objeto de la clase OrderRequest
         my_order = OrderRequest(product_id=product_id, delivery_address=address, order_type=order_type,
                                 phone_number=phone, zip_code=zip_code)
 
+        #  abrimos el fichero del almacén y guardamos los dato en una lista (data_list)
+        #  en caso de que el fichero esté vacío data_list se crea vacía
         file_store = JSON_FILE_PATH + "store_request.json"
         try:
             with open(file_store, "r", encoding="utf8", newline="") as file:
@@ -108,10 +115,12 @@ class OrderManager:
         except json.JSONDecodeError as ex:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
+        #  comprobamos que el pedido no se encuentra ya en el almacén
         found = False
         for item in data_list:
             if item["_OrderRequest__order_id"] == my_order.order_id:
                 found = True
+        #  si el pedido no se había almacenado antes, se añade a la lista de pedidos en forma de diccionario y se añade al almacén
         if not found:
             data_list.append(my_order.__dict__)
             try:
@@ -120,6 +129,7 @@ class OrderManager:
             except FileNotFoundError as ex:
                 raise OrderManagementException("Wrong file or file path") from ex
 
+        #  la función devuelve el order_id del nuevo pedido
         return my_order.order_id
 
     def send_product(self, input_file):

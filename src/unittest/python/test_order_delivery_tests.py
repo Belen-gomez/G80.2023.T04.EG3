@@ -24,12 +24,6 @@ class TestOrderDelivery(TestCase):
         """
         test ok
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -37,6 +31,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)
@@ -69,12 +70,7 @@ class TestOrderDelivery(TestCase):
         """
         test ok
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -82,6 +78,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)
@@ -110,12 +113,7 @@ class TestOrderDelivery(TestCase):
         """
         test wrong
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -123,6 +121,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)
@@ -148,12 +153,7 @@ class TestOrderDelivery(TestCase):
         """
         test wrong
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -161,6 +161,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)
@@ -186,12 +193,7 @@ class TestOrderDelivery(TestCase):
         """
         test wrong
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -199,6 +201,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)
@@ -224,12 +233,7 @@ class TestOrderDelivery(TestCase):
         """
         test wrong
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -237,6 +241,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         with self.assertRaises(OrderManagementException) as cm:
             my_order.deliver_product("9626d1c11d0f544588ab0b5be51279b32e96c9d35b956b782d9d8f4b813ec866")
@@ -250,12 +261,7 @@ class TestOrderDelivery(TestCase):
         """
         test wrong
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -263,6 +269,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                 zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)
@@ -288,12 +301,7 @@ class TestOrderDelivery(TestCase):
         """
         test wrong
         """
-        file_delivery = JSON_STORE_PATH + "store_delivery.json"
-        if os.path.isfile(file_delivery):
-            os.remove(file_delivery)
-        file_shipping = JSON_STORE_PATH + "store_shipping.json"
-        if os.path.isfile(file_shipping):
-            os.remove(file_shipping)
+
         file_store = JSON_STORE_PATH + "store_request.json"
         if os.path.isfile(file_store):
             os.remove(file_store)
@@ -301,6 +309,13 @@ class TestOrderDelivery(TestCase):
         my_order = OrderManager()
         my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN",
                                            zip_code="28005", phone="123456789", order_type="REGULAR")
+
+        file_delivery = JSON_STORE_PATH + "store_delivery.json"
+        if os.path.isfile(file_delivery):
+            os.remove(file_delivery)
+        file_shipping = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_shipping):
+            os.remove(file_shipping)
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_order.send_product(file_test)

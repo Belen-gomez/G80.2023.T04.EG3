@@ -178,7 +178,7 @@ class TestOrderManager(TestCase):
                     found = True
         self.assertFalse(found)
 
-    def test_with_address_short(self):
+    def test_with_address_short19(self):
         """
         test wrong
         """
@@ -202,7 +202,87 @@ class TestOrderManager(TestCase):
                     found = True
         self.assertFalse(found)
 
-    def test_with_address_long(self):
+    @freeze_time("2023-02-19")
+    def test_with_address20(self):
+        """
+        test ok
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, ",
+                                           zip_code="28005", phone="123456789", order_type="PREMIUM")
+        self.assertEqual(my_value, "a603dc8869caf614bf04d1358440ee4c")
+
+        file_store = JSON_FILE_PATH + "store_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "a603dc8869caf614bf04d1358440ee4c":
+                found = True
+        self.assertTrue(found)
+
+    @freeze_time("2023-02-19")
+    def test_with_address21(self):
+        """
+        test ok
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRIDD, ",
+                                           zip_code="28005", phone="123456789", order_type="PREMIUM")
+        self.assertEqual(my_value, "9181d7b0188b5ec0bb2d760489dccf85")
+
+        file_store = JSON_FILE_PATH + "store_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "9181d7b0188b5ec0bb2d760489dccf85":
+                found = True
+        self.assertTrue(found)
+
+    @freeze_time("2023-02-19")
+    def test_with_address99(self):
+        """
+        test ok len(address) = 99
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPA",
+                                           zip_code="28005", phone="123456789", order_type="PREMIUM")
+        self.assertEqual(my_value, "92ca1fcfc7eae8cb0c5deaacac26b1a3")
+
+        file_store = JSON_FILE_PATH + "store_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "92ca1fcfc7eae8cb0c5deaacac26b1a3":
+                found = True
+        self.assertTrue(found)
+
+    @freeze_time("2023-02-19")
+    def test_with_address100(self):
+        """
+        test ok len(address) = 99
+        """
+        my_order = OrderManager()
+        my_value = my_order.register_order(product_id="8421691423220", address="C/LISBOA,4, MADRID, SPAIN SPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAINSPAI",
+                                           zip_code="28005", phone="123456789", order_type="PREMIUM")
+        self.assertEqual(my_value, "f0f8dc09ee3c908d1e5be07cf21cd196")
+
+        file_store = JSON_FILE_PATH + "store_request.json"
+
+        with (open(file_store, "r", encoding="UTF-8", newline="")) as file:
+            data_list = json.load(file)
+        found = False
+        for item in data_list:
+            if item["_OrderRequest__order_id"] == "f0f8dc09ee3c908d1e5be07cf21cd196":
+                found = True
+        self.assertTrue(found)
+
+    def test_with_address_long101(self):
         """
         test wrong
         """

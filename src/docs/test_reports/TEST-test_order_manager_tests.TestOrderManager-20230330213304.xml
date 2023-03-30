@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_order_manager_tests.TestOrderManager-20230330213304" tests="21" file="test_order_manager_tests.py" time="0.079" timestamp="2023-03-30T21:33:05" failures="0" errors="0" skipped="0">
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_correct_complete_premium" time="0.009" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_correct_complete_regular" time="0.004" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address100" time="0.011" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address20" time="0.010" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address21" time="0.009" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address99" time="0.009" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address_long101" time="0.001" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address_short19" time="0.001" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_address_wrong" time="0.001" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_order_type_wrong" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_phone_long" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_phone_short" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_phone_str" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_product_code_wrong_len12" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_product_code_wrong_len14" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_product_code_wrong_string" time="0.003" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_product_code_wrong_sum" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_zip_code_long" time="0.001" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_zip_code_not_valid" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_zip_code_short" time="0.002" timestamp="2023-03-30T21:33:05"/>
+	<testcase classname="test_order_manager_tests.TestOrderManager" name="test_with_zip_code_str" time="0.003" timestamp="2023-03-30T21:33:05"/>
+</testsuite>

@@ -38,7 +38,7 @@ class TestOrderShipping(TestCase):
 
         file_test = JSON_TEST_PATH + "test_ok.json"
         my_value = myfile.send_product(file_test)
-        self.assertEqual(my_value, "c80509cf07c1efefcaba7ec55512f218a047925162f121fcac3fc008bfad810a")
+        self.assertEqual(my_value, "82fcbe31129725fd78bbde4945ec65eb1560a0f593d114e0b1e52943bc33f549")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
 
@@ -122,6 +122,23 @@ class TestOrderShipping(TestCase):
         with self.assertRaises(OrderManagementException) as cm:
             myfile.send_product(JSON_TEST_PATH + "test_no_json.txt")
         self.assertEqual("JSON Decode error - Wrong JSON format", cm.exception.message)
+
+        if os.path.isfile(file_store):
+            self.fail("Fallo: no debería haber file_store")
+
+    def test_wrong_json_vacio(self):
+        """
+        test wrong
+        """
+        file_store = JSON_STORE_PATH + "store_shipping.json"
+        if os.path.isfile(file_store):
+            os.remove(file_store)
+
+        myfile = OrderManager()
+
+        with self.assertRaises(OrderManagementException) as cm:
+            myfile.send_product(JSON_TEST_PATH + "tests_json_vacio.json")
+        self.assertEqual("Archivo JSON vacío", cm.exception.message)
 
         if os.path.isfile(file_store):
             self.fail("Fallo: no debería haber file_store")
@@ -1233,7 +1250,7 @@ class TestOrderShipping(TestCase):
 
         file_test = JSON_TEST_PATH + "test_41_duplication.json"
         my_value = myfile.send_product(file_test)
-        self.assertEqual(my_value, "b6a32b33fc2253f82baed3096dbd45e3e9cb181ed15ddeba9abf1fabc3ff18fb")
+        self.assertEqual(my_value, "bcef550ec4bfdcef41a24860c1ff5a0ad24f4d8288fccbd169584848858c8e80")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
 
@@ -1315,7 +1332,7 @@ class TestOrderShipping(TestCase):
 
         file_test = JSON_TEST_PATH + "test_41_duplication.json"
         my_value = myfile.send_product(file_test)
-        self.assertEqual(my_value, "b6a32b33fc2253f82baed3096dbd45e3e9cb181ed15ddeba9abf1fabc3ff18fb")
+        self.assertEqual(my_value, "bcef550ec4bfdcef41a24860c1ff5a0ad24f4d8288fccbd169584848858c8e80")
 
         file_store = JSON_STORE_PATH + "store_shipping.json"
 

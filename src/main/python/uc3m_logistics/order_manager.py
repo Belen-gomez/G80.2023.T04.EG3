@@ -153,6 +153,9 @@ class OrderManager:
             raise OrderManagementException("JSON Decode error - Wrong JSON format") from ex
 
         #  si el archivo está vacío devuelve una excepción
+        if len(data_list) == 0:
+            raise OrderManagementException("Archivo JSON vacío")
+
         if data_list[0] == {}:
             raise OrderManagementException("Pedido vacío")
 
